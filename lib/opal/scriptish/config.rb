@@ -17,5 +17,10 @@
 # along with opal-scriptish. If not, see <http://www.gnu.org/licenses/>.
 #++
 
-require 'opal/scriptish/document'
-require 'opal/scriptish/config'
+require 'opal-json'
+
+class Config
+  def self.get (name)
+    `GM_getValue(name)`
+  end
+end

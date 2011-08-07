@@ -17,5 +17,6 @@
 # along with opal-scriptish. If not, see <http://www.gnu.org/licenses/>.
 #++
 
-require 'opal/scriptish/document'
-require 'opal/scriptish/config'
+class Document
+
+end

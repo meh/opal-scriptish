@@ -43,20 +43,25 @@ class Command < Thor
     input = File.basename(file)
 
     File.open("#{dir}/#{input}", 'w') {|f|
-      f.write %{require 'opal/scriptish'; $:.unshift('#{Pathname.new(file).realpath.dirname}');}
+      f.write %{require 'opal/scriptish';}
       f.write content
     }
 
     File.open(options[:out] || file.sub(/\.rb$/, '.user.js'), 'w') {|f|
-      f.write Scriptish::Header.parse(header).tap {|h|
-        (h['require'] ||= []) <<
-          'https://raw.github.com/meh/opal-scriptish/master/opal/opal.min.js' <<
-          'https://raw.github.com/meh/opal-scriptish/master/opal/opal-parser.min.js'
+      f.write header = Scriptish::Header.parse(header).tap {|h|
+        (h['require'] = [h['require']]).unshift(
+          'http://adambeynon.github.com/opal/js/opal.js',
+          'http://adambeynon.github.com/opal/js/opal-parser.js').compact!
       }.to_js
+
+
+      $:.unshift(Pathname.new(file).realpath.dirname)
 
       f.write Dir.chdir(dir) {
         builder = Builder.new
         builder.build :files => input, :out => 'output'
+
+        $:.shift
 
         File.read('output')
       }

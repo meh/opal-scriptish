@@ -25,8 +25,6 @@ class Header < Hash
   def self.parse (text)
     return unless text
 
-    length = text.lines.to_a.length
-
     Header.new(YAML.parse(text.lines.map {|line|
       line[2 .. -1]
     }.join).transform)
@@ -37,15 +35,19 @@ class Header < Hash
   end
 
   def to_js
-    '// ==UserScript== ' + map {|name, value|
+    "// ==UserScript==\n" +
+
+    map {|name, value|
       if value.is_a?(Array)
         value.map {|value|
-          "// @#{name}: #{value}"
+          "// @#{name} #{value}"
         }.join("\n")
       else
-        "// @#{name}: #{value}"
+        "// @#{name} #{value}"
       end
-    }.join("\n") + " // ==/UserScript==\n"
+    }.join("\n") +
+      
+    "\n// ==/UserScript==\n\n"
   end
 end
 
