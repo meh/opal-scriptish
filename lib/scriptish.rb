@@ -17,38 +17,5 @@
 # along with opal-scriptish. If not, see <http://www.gnu.org/licenses/>.
 #++
 
-require 'yaml'
-
-module Opal; module Scriptish
-
-class Header < Hash
-  def self.parse (text)
-    return unless text
-
-    Header.new(YAML.parse(text.lines.map {|line|
-      line[2 .. -1]
-    }.join).transform)
-  end
-
-  def initialize (data)
-    merge! data
-  end
-
-  def to_js
-    "// ==UserScript==\n" +
-
-    map {|name, value|
-      if value.is_a?(Array)
-        value.map {|value|
-          "// @#{name} #{value}"
-        }.join("\n")
-      else
-        "// @#{name} #{value}"
-      end
-    }.join("\n") +
-      
-    "\n// ==/UserScript==\n\n"
-  end
-end
-
-end; end
+require 'scriptish/document'
+require 'scriptish/config'
