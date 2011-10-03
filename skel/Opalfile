@@ -1,1 +1,5 @@
-# this file will contain the dependencies
+# core
+gem 'scriptish', git: 'git://github.com/meh/opal-scriptish.git'
+
+# add whatever external lib you wanna use
+# gem 'rquery', git: 'git://github.com/adambeynon/rquery.git'
