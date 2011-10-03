@@ -8,3 +8,4 @@
 require 'scriptish'
 
 alert 'why hello thar'
+require 'external'
