@@ -44,7 +44,7 @@ module Scriptish
 	end
 
 	def window
-		Window(`unsafeWindow`)
+		Window.new(`unsafeWindow`)
 	end
 
 	def metadata
@@ -56,7 +56,7 @@ module Scriptish
 	end
 
 	def parse (text)
-		Document(`GM_safeHTMLParser(#{text.to_s})`)
+		Document.new(`GM_safeHTMLParser(#{text.to_s})`)
 	end
 
 	def resource (name)
