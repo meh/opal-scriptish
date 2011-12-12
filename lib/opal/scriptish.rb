@@ -8,6 +8,8 @@
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 #++
 
+require 'opal/browser'
+
 require 'opal/scriptish/values'
 require 'opal/scriptish/console'
 require 'opal/scriptish/request'
@@ -23,7 +25,7 @@ module Scriptish
 		Values::instance[name] = value
 	end
 
-	 def delete (name)
+	def delete (name)
 		Values::instance.delete(name)
 	end
 
@@ -36,7 +38,7 @@ module Scriptish
 	end
 
 	def window
-		`unsafeWindow`
+		Window(`unsafeWindow`)
 	end
 
 	def metadata
