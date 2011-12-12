@@ -9,6 +9,8 @@
 #++
 
 require 'opal/browser'
+require 'opal/json'
+require 'singleton'
 
 require 'opal/scriptish/values'
 require 'opal/scriptish/console'

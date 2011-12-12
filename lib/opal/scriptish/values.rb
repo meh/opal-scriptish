@@ -8,8 +8,6 @@
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 #++
 
-require 'opal/json'
-
 module Scriptish
 
 class Values
