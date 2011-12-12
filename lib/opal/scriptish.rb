@@ -19,16 +19,20 @@ require 'opal/scriptish/resources'
 require 'opal/scriptish/menu'
 
 module Scriptish
+	def values
+		Values::instance
+	end
+
 	def get (name)
-		Values::instance[name]
+		values[name]
 	end
 
 	def set (name, value)
-		Values::instance[name] = value
+		values[name] = value
 	end
 
 	def delete (name)
-		Values::instance.delete(name)
+		values.delete(name)
 	end
 
 	def console
@@ -36,7 +40,7 @@ module Scriptish
 	end
 
 	def updatable?
-		`GM_updatingEnabled()`
+		Opal.function?(`GM_updatingEnabled`) ? `GM_updatingEnabled()` : false
 	end
 
 	def window
@@ -68,7 +72,9 @@ module Scriptish
 	end
 
 	def open_in_tab (url, background = undefined, reuse = undefined)
-		`GM_openInTab(url, background, reuse)`
+		Opal.function?(`GM_openInTab`) ?
+			`GM_openInTab(url, background, reuse)` :
+			`window.open(url, "_blank")`
 	end
 
 	def menu
