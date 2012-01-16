@@ -8,9 +8,10 @@
 #  0. You just DO WHAT THE FUCK YOU WANT TO.
 #++
 
+require 'singleton'
+
 require 'opal/browser'
 require 'opal/json'
-require 'singleton'
 
 require 'opal/scriptish/values'
 require 'opal/scriptish/console'

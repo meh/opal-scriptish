@@ -75,22 +75,22 @@ class Request
 
 	def to_hash
 		{
-			'method'                  => @method.to_s.upcase,
-			'url'                     => @url.to_s,
-			'onload'                  => @load,
-			'onerror'                 => @error,
-			'onreadystatechange'      => @state_change,
-			'data'                    => @data,
-			'headers'                 => @headers,
-			'binary'                  => @binary,
-			'user'                    => @user,
-			'password'                => @password,
-			'overrideMimeType'        => @mime_type,
-			'ignoreCache'             => @ignore.include?(:cache),
-			'ignoreRedirect'          => @ignore.include?(:redirect),
-			'ignoreTempRedirect'      => @ignore.include?(:temporary_redirect),
-			'ignorePermanentRedirect' => @ignore.include?(:permanent_redirect),
-			'redirectionLimit'        => @limit
+			method:                  @method.to_s.upcase,
+			url:                     @url.to_s,
+			onload:                  @load,
+			onerror:                 @error,
+			onreadystatechange:      @state_change,
+			data:                    @data,
+			headers:                 @headers,
+			binary:                  @binary,
+			user:                    @user,
+			password:                @password,
+			overrideMimeType:        @mime_type,
+			ignoreCache:             @ignore.include?(:cache),
+			ignoreRedirect:          @ignore.include?(:redirect),
+			ignoreTempRedirect:      @ignore.include?(:temporary_redirect),
+			ignorePermanentRedirect: @ignore.include?(:permanent_redirect),
+			redirectionLimit:        @limit
 		}
 	end
 
