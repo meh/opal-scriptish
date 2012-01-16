@@ -1,0 +1,58 @@
+#! /usr/bin/env ruby
+require 'optparse'
+require 'yaml'
+require 'opal'
+
+options = {}
+
+OptionParser.new do |o|
+	o.on '-m', '--main PATH' do |value|
+		options[:main] = value
+	end
+end.parse!
+
+unless options[:main]
+	options[:main] = ARGV.shift or fail 'what file is the main?'
+end
+
+options[:main] = File.realpath(options[:main])
+
+class Header < Hash
+	def self.parse (text)
+		return unless text
+
+		Header.new(YAML.parse(text.lines.map {|line|
+			line[2 .. -1]
+		}.join).transform)
+	end
+
+	def initialize (data)
+		merge! data
+	end
+
+	def to_js
+		"// ==UserScript==\n" +
+
+		map {|name, value|
+			if value.is_a?(Array)
+				value.map {|value|
+					"// @#{name} #{value}"
+				}.join("\n")
+			else
+				"// @#{name} #{value}"
+			end
+		}.join("\n") +
+
+		"\n// ==/UserScript==\n\n"
+	end
+end
+
+header = begin
+	Header.parse(File.read(options[:main]).match(/\A# ---$(.*?)^# ---$/m).to_a.last)
+rescue
+	fail 'no header found'
+end.tap {|h|
+	requires = h['require'] || []
+
+	requires.unshift 'http://adambeynon.github.com/opal/opal.js'
+}
